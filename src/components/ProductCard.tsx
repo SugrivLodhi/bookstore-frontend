@@ -21,6 +21,8 @@ const CardContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   border-radius: 4px;
+  max-height: 15rem;
+  object-fit: fill;
 `;
 
 const Title = styled.h3`
