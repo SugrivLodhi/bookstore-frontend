@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,7 +18,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 350px;
 `;
 
 const FormGroup = styled.div`
@@ -68,7 +69,7 @@ const SignupPage: React.FC = () => {
     email: '',
     password: ''
   });
-
+  const router = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -77,7 +78,7 @@ const SignupPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    // Add your signup logic here
+    router.push("/")
   };
 
   return (

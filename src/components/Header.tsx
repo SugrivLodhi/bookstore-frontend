@@ -2,9 +2,11 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FaCartArrowDown } from "react-icons/fa6";
 import Logo  from '../../public/book-logo.jpg'
 import { CgProfile } from "react-icons/cg";
 import LoginModal from './Login'
+import Link from 'next/link';
 const Wrapper = styled.section`
    padding: 1rem 2rem;
    display:flex;
@@ -27,14 +29,25 @@ const Input = styled.input`
   width: 60vw;
   border-radius: 3px;
 `
+const IconWrapper=  styled.div`
+  display: flex;
+  align-items: center;
+  gap:2rem;
+`
 const Header = () => {
   const [islogin,setlogin]= useState(false)
   return (
     <>
     <Wrapper>
+    <Link href="/"> 
      <Image src={Logo} width={30} height={30} alt='book_logo' /> 
+     </Link> 
      <Input type='search' placeholder='Search book' />
-     <CgProfile onClick={()=>setlogin(true)}  />
+      <IconWrapper>
+      <FaCartArrowDown size={30}/>
+     <CgProfile size={30} onClick={()=>setlogin(true)}  />
+
+     </IconWrapper>
     </Wrapper>
     {islogin && (
       <LoginModal onClose={()=>setlogin(false)} />

@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 // Styled components
@@ -23,7 +24,6 @@ const ModalContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -49,6 +49,13 @@ const Input = styled.input`
   border-radius: 4px;
 `;
 
+const Span = styled.span`
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  display: block;
+  color: blueviolet;
+`
+
 const Button = styled.button`
   padding: 10px 20px;
   background-color: #007bff;
@@ -67,6 +74,19 @@ const Button = styled.button`
 const LoginModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).id === 'modalOverlay') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [onClose]);
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +96,7 @@ const LoginModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay id="modalOverlay">
       <ModalContainer>
         <Title>Login</Title>
         <Form onSubmit={handleLogin}>
@@ -89,6 +109,11 @@ const LoginModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <Input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </FormGroup>
           <Button type="submit">Login</Button>
+          <Link href="/account">
+            <Span role='button' onClick={onClose}>
+            Create Account
+            </Span>
+          </Link>
         </Form>
       </ModalContainer>
     </ModalOverlay>
